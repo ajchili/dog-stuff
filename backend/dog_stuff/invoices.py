@@ -1,16 +1,10 @@
-from flask import Flask, request
+from flask import Blueprint, request
 from PIL import Image
 from pytesseract import image_to_string
 
-app = Flask(__name__)
+bp = Blueprint('invoices', __name__, url_prefix='/invoices')
 
-
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
-@app.route("/upload", methods=["POST"])
+@bp.route("/upload", methods=["POST"])
 def file_upload_handler():
     data = dict()
 
