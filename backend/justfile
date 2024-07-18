@@ -1,0 +1,25 @@
+@default:
+	just --list
+
+@setup:
+	just setup-python --silent
+	just setup-tesseract
+
+@setup-python:
+	python -m venv .venv
+	source .venv/bin/activate
+	pip install -r requirements.txt
+
+@setup-tesseract:
+	brew install tesseract
+
+@install *args:
+	pip install {{args}}
+	pip freeze > requirements.txt
+
+@uninstall *args:
+	pip uninstall {{args}}
+	pip freeze > requirements.txt
+
+@start:
+	flask --app src/server run
